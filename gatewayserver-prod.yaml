@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gatewayserver
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: employeeservice
+            uri: lb://employeeservice
+            predicates:
+              - Path=/api/v1/employees/**
+          - id: departmentservice
+            uri: lb://departmentservice
+            predicates:
+              - Path=/api/v1/departments/**
+          - id: eureka
+            uri: http://discovery-server:8888
+            predicates:
+              - Path=/eureka/web
+            filters:
+              - SetPath=/
+          - id: eureka-static
+            uri: http://discovery-server:8888
+            predicates:
+              - Path=/eureka/**
+
+server:
+  port: 8088
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8888/eureka/
+    fetch-registry: true
+    register-with-eureka: true
