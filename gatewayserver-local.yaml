@@ -23,7 +23,7 @@ spring:
               - Path=/eureka/**
 
 server:
-  port: 8008
+  port: 8088
 
 eureka:
   client:
